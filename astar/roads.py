@@ -2,26 +2,28 @@
 #PF 2020 C1 V2
 
 #Created by Charlie Murphy
-#9 January 2019
-#Version 2.3.1
-
-import math
+#10 January 2019
 
 #Road Attributions Dictionary
 class Road:
 
     #Road Attributions
-    def __init__(self):
-        self.speed_limit = 120 #kph
+    def __init__(self, speed_limit, lanes, segment_distance):
+        self.speed_limit = speed_limit #kph
         self.lane_width = 3.6 #m
         self.shoulder_width = 1.8 #m
         self.divided_median = True #True or False
         self.access_point_density = .5 #intersections/km
-        self.lanes = 2 #number of lanes in 1 direction
+        self.lanes = lanes #number of lanes in 1 direction
         self.population_density = 'rural' #'rural' or 'urban'
         self.terrain = 'mountainous' #'level', 'rolling', 'mountainous'
         self.percent_heavy_vehichles = .4 #decimal percentage
-        self.segment_distance = 1 #km
+        self.segment_distance = segment_distance #km
+
+        self.free_flow_speed()
+        self.critical_density()
+        self.jam_density()
+        self.individual_speed_decrease()
 
     #Free Flow Speed Calculator
     def free_flow_speed(self):
@@ -63,7 +65,7 @@ class Road:
         if self.population_density=='rural' or self.lanes>=5:
             f_N = 0
         else:
-            f_N = (5 - lanes)*1.5  
+            f_N = (5 - self.lanes)*1.5
 
         #Calculation for Free Flow Speed (FFS)
         self.FFS = BFFS - f_LW - f_LC - f_M - f_A - f_N
