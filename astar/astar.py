@@ -2,17 +2,12 @@ from node import Graph, Node
 
 
 def calculate_heuristics(current_node, other_node):
+    # Euclidean distance
     (x1, y1) = current_node.pos
     (x2, y2) = other_node.pos
     dx = (x2 - x1) ** 2
     dy = (y2 - y1) ** 2
     return dx + dy
-
-
-def calculate_cost(current, other):
-
-    return calculate_heuristics(current, other)
-
 
 def build_path(current_node: Node):
     path = [current_node]
@@ -21,7 +16,6 @@ def build_path(current_node: Node):
         path.append(parent)
         current_node = parent
     return path
-
 
 def astar(graph: Graph, start_node, end_node):
     start_node.g = 0
@@ -41,7 +35,7 @@ def astar(graph: Graph, start_node, end_node):
         for neighbor in graph.get_neighbors(current_node):
             if neighbor.closed:
                 continue
-            tentativeG = current_node.g + calculate_cost(current_node, neighbor)
+            tentativeG = current_node.g + graph.get_cost(current_node, neighbor)
             if neighbor.g is None or tentativeG < neighbor.g:
                 neighbor.parent = current_node
                 neighbor.g = tentativeG
