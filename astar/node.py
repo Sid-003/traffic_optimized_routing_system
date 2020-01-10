@@ -1,3 +1,6 @@
+from roads import Road
+
+
 class Graph:
 
     def __init__(self):
@@ -11,18 +14,11 @@ class Graph:
         self.edges[(e1, e2)] = c
 
     def get_neighbors(self, node):
-        final = []
-        for x in list(self.edges.keys()):
-            if x[0] == node.id:
-                final.append(self.nodes[x[1] -1])
-            elif x[1] == node.id:
-                if not(x in final):
-                    final.append(self.nodes[x[0] - 1])
-        return final
+        return [x for x in self.edges if node.id == x[1]]
 
     def get_cost(self, current, neighbor):
-        #just uses the distance currently
-        return 1
+        road:Road = self.edges[(current.id, neighbor.id)]
+        return road.travel_time(0)
 
 
 class Node:
