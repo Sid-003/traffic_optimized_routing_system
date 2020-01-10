@@ -1,0 +1,5 @@
+**/astar/venv
+**/astar/.idea
+**/astar/_pycache_
+*.iml
+*.pyc
