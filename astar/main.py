@@ -2,14 +2,6 @@ from node import Node, Graph
 
 
 open_list = []
-closed_list = []
-
-# Direction:    N       S       E        W        NE       SW       NW        SE
-directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
-
-def is_valid(pos):
-    return True
-
 
 def calculate_heuristics(current_node, successor):
     (x1, y1) = current_node.pos
@@ -56,7 +48,27 @@ def astar(graph: Graph, start_node, end_node):
                     open_list.append(neighbor)
 
 graph = Graph()
-graph.generate_nodes()
-graph.generate_connections()
+graph.add_node(1, (0, 0))
+graph.add_node(2, (0, 1))
+graph.add_node(3, (0, 2))
+graph.add_node(4, (1, 1))
+graph.add_node(5, (2, 2))
+graph.add_node(6, (2, 1))
+graph.add_node(7, (2, 0))
+graph.add_node(8, (4, 1))
+graph.add_node(9, (4, 0))
+graph.add_node(10, (5, 0.5))
 
-print(list(reversed([x.pos for x in astar(graph, Node(7, (3, 2)), Node(4, (1, 0)))])))
+
+graph.add_edge(1, 4, 3)
+graph.add_edge(2, 4, 3)
+graph.add_edge(3, 4, 3)
+graph.add_edge(4, 5, 3)
+graph.add_edge(4, 6, 3)
+graph.add_edge(4, 7, 3)
+graph.add_edge(7, 9, 3)
+graph.add_edge(6, 8, 3)
+graph.add_edge(8, 10, 3)
+
+
+print(list(reversed([x.pos for x in astar(graph, Node(5, (2, 2)), Node(10, (5, 0.5)))])))

@@ -10,7 +10,7 @@ class Graph:
     def add_edge(self, e1, e2, c):
         self.edges[(e1, e2)] = c
 
-    def generate_neighbors(self, node):
+    def get_neighbors(self, node):
         final = []
         for x in list(self.edges.keys()):
             if x[0] == node.id:
