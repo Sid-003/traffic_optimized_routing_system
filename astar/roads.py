@@ -19,6 +19,7 @@ class Road:
         self.terrain = 'level'  # 'level', 'rolling', 'mountainous'
         self.percent_heavy_vehichles = .25  # decimal percentage
         self.segment_distance = segment_distance  # km
+        self.load = 0
 
         self.free_flow_speed()
         self.critical_density()
@@ -142,8 +143,11 @@ class Road:
         # Calculate the decrease in speed adjusted for segment distance
         return abs(self.ISD) * self.segment_distance
 
-    def travel_time(self, load):
-        return (self.segment_distance / self.speed(load)) * 3600
+    def travel_time(self):
+        return (self.segment_distance / self.speed(self.load)) * 3600
+
+    def add_vehichle(self):
+        self.load += 1
 
 # AB = Road(120,2,1)
 # print(AB.travel_time(0))
