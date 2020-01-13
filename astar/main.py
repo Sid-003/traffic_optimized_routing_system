@@ -23,14 +23,15 @@ graph.add_edge(3, 4, Road(80, 2, math.sqrt(2)))
 graph.add_edge(2, 3, Road(120, 2, 2))
 graph.add_edge(3, 2, Road(120, 2, 2))
 
-for vehichles in range(10):
+# astar
+for vehichles in range(1000):
 
     start_node, end_node = random_nodes(graph)
 
     path = list(reversed([x.pos for x in astar(graph, Node(graph.nodes[start_node].id,graph.nodes[start_node].pos),
                                                Node(graph.nodes[end_node].id,graph.nodes[end_node].pos))]))
 
-    segment_load(graph, path)
+    segment_load(graph, path, 'astar')
     node_reset(graph)
 
-print(round(total_time(graph)))
+print(round(total_time(graph, 'astar')/100))

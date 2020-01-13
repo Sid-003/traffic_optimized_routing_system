@@ -15,9 +15,9 @@ class Graph:
     def get_neighbors(self, node):
         return [self.nodes[x[1]-1] for x in self.edges.keys() if node.id == x[0]]
 
-    def get_cost(self, current, neighbor):
+    def get_cost(self, current, neighbor, algorithm):
         road:Road = self.edges[(current.id, neighbor.id)]
-        return road.travel_time()
+        return road.travel_time(algorithm)
 
 
 class Node:
@@ -33,6 +33,9 @@ class Node:
 
     def __eq__(self, other):
         return self.pos == other
+
+    def __st__(self):
+        return "Id: {0}, Position: {1}".format(self.id,self.pos)
 
     def reset(self):
         self.g = None

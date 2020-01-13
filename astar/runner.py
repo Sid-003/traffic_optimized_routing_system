@@ -13,22 +13,22 @@ def node_reset(graph):
     for count in range(len(graph.nodes)):
         graph.nodes[count].reset()
 
-def segment_load(graph, path):
+def segment_load(graph, path, algorithm):
     routes = []
     for count in range(len(path)):
         for x in range(len(graph.nodes)):
             if path[count] == graph.nodes[x].pos:
                 routes.append(graph.nodes[x].id)
         if count != 0:
-            graph.edges[(routes[count - 1], routes[count])].add_vehichle()
+            graph.edges[(routes[count - 1], routes[count])].add_vehichle(algorithm)
 
-def total_time(graph):
+def total_time(graph, algorithm):
     time = 0
     for start_node in range(len(graph.nodes) + 1):
         for end_node in range(len(graph.nodes) + 1):
             try:
-                time += graph.edges[(start_node, end_node)].travel_time() * graph.edges[
-                    (start_node, end_node)].load
+                time += graph.edges[(start_node, end_node)].travel_time(algorithm) * graph.edges[
+                    (start_node, end_node)].algorithm_used(algorithm)
             except:
                 pass
     return time

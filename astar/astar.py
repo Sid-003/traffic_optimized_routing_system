@@ -35,7 +35,7 @@ def astar(graph: Graph, start_node, end_node):
         for neighbor in graph.get_neighbors(current_node):
             if neighbor.closed:
                 continue
-            tentativeG = current_node.g + graph.get_cost(current_node, neighbor)
+            tentativeG = current_node.g + graph.get_cost(current_node, neighbor, 'astar')
             if neighbor.g is None or tentativeG < neighbor.g:
                 neighbor.parent = current_node
                 neighbor.g = tentativeG
