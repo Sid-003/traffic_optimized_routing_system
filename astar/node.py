@@ -33,3 +33,6 @@ class Node:
 
     def __eq__(self, other):
         return self.pos == other
+
+    def __str__(self):
+        return "Id: {0}, Position: {1}".format(self.id, self.pos)
