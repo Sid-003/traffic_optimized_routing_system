@@ -145,16 +145,16 @@ class Road:
         # Calculate the decrease in speed adjusted for segment distance
         return abs(self.ISD) * self.segment_distance
 
-    def travel_time(self,algorithm):
-        return (self.segment_distance / self.speed(self.algorithm_used(algorithm))) * 3600
+    def travel_time(self, load):
+        return self.segment_distance / self.speed(load) * 3600
 
-    def add_vehichle(self,algorithm):
+    def add_vehichle(self, algorithm, load):
         if algorithm == 'astar':
-            self.aload += 1
+            self.aload += load
         else:
-            self.bload += 1
+            self.bload += load
 
-    def algorithm_used(self,algorithm):
+    def algorithm_used(self, algorithm):
         if algorithm == 'astar':
             return self.aload
         else:

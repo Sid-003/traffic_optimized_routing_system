@@ -17,8 +17,7 @@ class Graph:
 
     def get_cost(self, current, neighbor, algorithm):
         road:Road = self.edges[(current.id, neighbor.id)]
-        return road.travel_time(algorithm)
-
+        return road.travel_time(road.algorithm_used(algorithm))
 
 class Node:
 

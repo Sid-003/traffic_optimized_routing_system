@@ -1,4 +1,5 @@
 from astar import astar
+from bna import bna
 from node import Node, Graph
 from roads import Road
 from runner import random_nodes, node_reset, segment_load, total_time
@@ -23,15 +24,39 @@ graph.add_edge(3, 4, Road(80, 2, math.sqrt(2)))
 graph.add_edge(2, 3, Road(120, 2, 2))
 graph.add_edge(3, 2, Road(120, 2, 2))
 
-# astar
-for vehichles in range(1000):
 
-    start_node, end_node = random_nodes(graph)
+num = 10
+nodes_list = [[0,1],[0,3]]
+# for vehichles in range(num):
+ #  nodes_list.append(random_nodes(graph))
+
+bna(graph, nodes_list)
+input()
+
+# astar
+for vehichles in range(num):
+
+    #start_node, end_node = random_nodes(graph)
+    start_node = nodes_list[vehichles][0]
+    end_node = nodes_list[vehichles][1]
 
     path = list(reversed([x.pos for x in astar(graph, Node(graph.nodes[start_node].id,graph.nodes[start_node].pos),
                                                Node(graph.nodes[end_node].id,graph.nodes[end_node].pos))]))
+    segment_load(graph, path, 'astar', 1)
 
-    segment_load(graph, path, 'astar')
     node_reset(graph)
 
-print(round(total_time(graph, 'astar')/100))
+# bna
+#nodes_list = order(graph, nodes_list)
+#for vehichles in range(num):
+
+    #start_node = nodes_list[vehichles][0]
+    #end_node = nodes_list[vehichles][1]
+
+    path = list(reversed([x.pos for x in bna(graph, Node(graph.nodes[start_node].id, graph.nodes[start_node].pos),
+                                               Node(graph.nodes[end_node].id, graph.nodes[end_node].pos))]))
+    segment_load(graph, path, 'bna')
+    node_reset(graph)
+
+print(round(total_time(graph, 'astar')))
+print(round(total_time(graph, 'bna')))
