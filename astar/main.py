@@ -46,4 +46,3 @@ for vehichles in range(num):
 bna(graph, nodes_list)
 
 print(round(total_time(graph, 'astar')))
-print(round(total_time(graph, 'bna')))
