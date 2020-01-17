@@ -59,4 +59,3 @@ for vehichles in range(num):
     node_reset(graph)
 
 print(round(total_time(graph, 'astar')))
-print(round(total_time(graph, 'bna')))
