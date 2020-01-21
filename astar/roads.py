@@ -20,6 +20,9 @@ class Road:
         self.percent_heavy_vehichles = .25  # decimal percentage
         self.segment_distance = segment_distance  # km
 
+        self.aload = 0 # astar
+        self.bload = 0 # our algorithm
+
         self.free_flow_speed()
         self.critical_density()
         self.jam_density()
@@ -143,10 +146,16 @@ class Road:
         return abs(self.ISD) * self.segment_distance
 
     def travel_time(self, load):
-        return (self.segment_distance / self.speed(load)) * 3600
+        return self.segment_distance / self.speed(load) * 3600
 
-# AB = Road(120,2,1)
-# print(AB.travel_time(0))
-# print(AB.travel_time(60))
-# print("Individual Impact on Traffic System =",round(AB.i_factor(),3),"km^3/vehichle-hours")
-# print("Individual Travel Time Increase =",round(AB.h_factor(10),3),"s")
+    def add_vehichle(self, algorithm, load):
+        if algorithm == 'astar':
+            self.aload += load
+        else:
+            self.bload += load
+
+    def algorithm_used(self, algorithm):
+        if algorithm == 'astar':
+            return self.aload
+        else:
+            return self.bload
