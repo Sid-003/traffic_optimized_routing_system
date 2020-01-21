@@ -33,3 +33,13 @@ def total_time(graph, algorithm):
                 pass
     return time
 
+
+def total_load(graph, algorithm):
+    load = 0
+    for start_node in range(len(graph.nodes) + 1):
+        for end_node in range(len(graph.nodes) + 1):
+            try:
+                load += graph.edges[(start_node, end_node)].algorithm_used(algorithm)
+            except:
+                pass
+    return load

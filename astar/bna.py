@@ -33,8 +33,8 @@ def simple_journey(graph, connection_list):
     long_journeys = []
     for x in range(len(connection_list)):
         try:
-            graph.edges[((connection_list[x].start_node + 1),
-                         (connection_list[x].end_node + 1))].add_vehichle('bna',connection_list[x].load)
+            graph.edges[((connection_list[x].start_node),
+                         (connection_list[x].end_node))].add_vehichle('bna',connection_list[x].load)
         except:
             long_journeys.append(connection_list[x])
     return long_journeys
@@ -75,17 +75,6 @@ def all_paths_helper(graph, current_node, end_node, path, path_index):
     path.pop()
     current_node.closed = False
     return path_index
-
-
-def indices(lst, element):
-    result = []
-    offset = -1
-    while True:
-        try:
-            offset = lst.index(element, offset + 1)
-        except ValueError:
-            return result
-        result.append(offset)
 
 
 def rank_routes(graph, routes_list):
@@ -138,7 +127,8 @@ def load_distribution(graph, connection_list, path_all_index):
                                     route_loads = [a_vehicles, b_vehicles, c_vehicles, d_vehicles]
 
         for x in range(4):
-            segment_load(graph, routes_list[x], 'bna', route_loads[x])
+            if routes_list[x] is not None:
+                segment_load(graph, routes_list[x], 'bna', route_loads[x])
 
             """
             for y in range(len(routes_list[x])):

@@ -2,30 +2,30 @@ from astar import astar
 from bna import bna
 from node import Node, Graph
 from roads import Road
-from runner import random_nodes, node_reset, segment_load, total_time
+from runner import random_nodes, node_reset, segment_load, total_time, total_load
 import math
 
 graph = Graph()
-graph.add_node(1, (0,1))
-graph.add_node(2, (1,0))
-graph.add_node(3, (1,2))
-graph.add_node(4, (2,1))
+graph.add_node(0, (0, 1))
+graph.add_node(1, (1, 0))
+graph.add_node(2, (4, 3))
+graph.add_node(3, (5, 2))
 
-graph.add_edge(1, 2, Road(80, 2, math.sqrt(2)))
-graph.add_edge(1, 3, Road(80, 2, math.sqrt(2)))
-graph.add_edge(2, 1, Road(80, 2, math.sqrt(2)))
-graph.add_edge(3, 1, Road(80, 2, math.sqrt(2)))
+graph.add_edge(0, 1, Road(120, 1, math.sqrt(2)))
+graph.add_edge(2, 3, Road(120, 1, math.sqrt(2)))
+graph.add_edge(1, 0, Road(120, 1, math.sqrt(2)))
+graph.add_edge(3, 2, Road(120, 1, math.sqrt(2)))
 
-graph.add_edge(4, 2, Road(80, 2, math.sqrt(2)))
-graph.add_edge(4, 3, Road(80, 2, math.sqrt(2)))
-graph.add_edge(2, 4, Road(80, 2, math.sqrt(2)))
-graph.add_edge(3, 4, Road(80, 2, math.sqrt(2)))
+graph.add_edge(1, 3, Road(60, 4, math.sqrt(13)))
+graph.add_edge(0, 2, Road(60, 4, math.sqrt(13)))
+graph.add_edge(3, 1, Road(60, 4, math.sqrt(13)))
+graph.add_edge(2, 0, Road(60, 4, math.sqrt(13)))
 
-graph.add_edge(2, 3, Road(120, 2, 2))
-graph.add_edge(3, 2, Road(120, 2, 2))
+graph.add_edge(1, 2, Road(120, 4, math.sqrt(13)))
+graph.add_edge(2, 1, Road(120, 4, math.sqrt(13)))
 
 
-num = 1000
+num = 500
 nodes_list = []
 for vehichles in range(num):
     nodes_list.append(random_nodes(graph))
@@ -47,3 +47,4 @@ bna(graph, nodes_list)
 
 print(round(total_time(graph, 'astar')))
 print(round(total_time(graph, 'bna')))
+print()
