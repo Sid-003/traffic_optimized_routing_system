@@ -52,6 +52,7 @@ def all_paths(graph, connection_list):
     return path_all_index
 
 
+
 # to fix: repeat node error
 # to add: limit on too long paths
 def all_paths_helper(graph, current_node, end_node, path, path_index):
@@ -93,37 +94,13 @@ def rank_routes(graph, routes_list):
 
     for x in range(len(routes_list)):
         segment_load(graph, routes_list[x], 'bna', 1)
-        times.append(total_time(graph, 'bna') - baseline)
+        times.append((routes_list[x], total_time(graph, 'bna') - baseline))
         segment_load(graph, routes_list[x], 'bna', -1)
 
-    for x in range(4):
-        try:
-            times[x]
-        except:
-            times.append(None)
-    sorted_times = sorted(times)[0:4]
-
-    new_routes_list = []
-    used_times = []
-    for count in range(4):
-        if sorted_times[count] is not None:
-            used = False
-            for x in range(len(used_times)):
-                if sorted_times[count] == used_times[x]:
-                    used = True
-            if used is True:
-                break
-            indexes = indices(times, sorted_times[x])
-            for x in range(len(indexes)):
-                new_routes_list.append(routes_list[indexes[x]])
-
-    for x in range(4):
-        try:
-            new_routes_list[x]
-        except:
-            new_routes_list.append(None)
-    return new_routes_list
-
+    routes = [x[0] for x in sorted(times, key=lambda x: x[1])]
+    for x in range(4 - len(routes)):
+        routes.append(None)
+    return routes[0:4]
 
 def calculate_time(graph, routes_list, vehicles):
     baseline = total_time(graph, 'bna')
