@@ -3,6 +3,7 @@
 # Import Necessary Classes and Functions
 from astar import astar
 from bna import bna
+from imagegen import composite_and_save, generate_image
 from node import Node, Graph
 from roads import Road
 from runner import random_nodes, node_reset, segment_load, total_time, graph_reset
@@ -32,7 +33,7 @@ graph.add_edge(1, 2, Road(120, 4, math.sqrt(13)))
 graph.add_edge(2, 1, Road(120, 4, math.sqrt(13)))
 
 num = 710
-for x in range(30):
+for x in range(1):
     num -= 10
 
     # Create List of Randomized Vehicle Trips
@@ -60,6 +61,10 @@ for x in range(30):
     # Run Better Navigational Algorithm (BNA)
     bna(graph, nodes_list)
 
+    m1 = generate_image(graph, 'astar', False)
+    m2 = generate_image(graph, 'bna', False)
+    composite_and_save(m1, m2)
+
     file = open("astar_times.txt","a")
     file.write(str(total_time(graph, 'astar')) + '\n')
     file.close()
@@ -74,3 +79,4 @@ for x in range(30):
 
     graph_reset(graph)
     print(num)
+
