@@ -1,14 +1,22 @@
+# A* Path-Finding Algorithm
+# This algorithm is equivalent to those currently used by GPS Navigation tools, like Google Maps
+
+# Import Nodes and Graph classes
 from node import Graph, Node
 
 
+# Determine Optimal Direction from Current Location to End
 def calculate_heuristics(current_node, other_node):
-    # Euclidean distance
+
+    # Utilize Euclidian Distance
     (x1, y1) = current_node.pos
     (x2, y2) = other_node.pos
     dx = (x2 - x1) ** 2
     dy = (y2 - y1) ** 2
     return dx + dy
 
+
+# Add Node to Ideal Shortest Path
 def build_path(current_node: Node):
     path = [current_node]
     while current_node.parent is not None:
@@ -17,6 +25,8 @@ def build_path(current_node: Node):
         current_node = parent
     return path
 
+
+# A* Algorithm
 def astar(graph: Graph, start_node, end_node):
     start_node.g = 0
     open_list = [start_node]

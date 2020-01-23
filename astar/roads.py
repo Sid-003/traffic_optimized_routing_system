@@ -1,10 +1,7 @@
 # Traffic Speed Calculator
+# Uses road attributions and vehicle loads to simulate speed of traffic based on observational determined equations
 
-
-# Created by Charlie Murphy
-# 10 January 2019
-
-# Road Attributions Dictionary
+# Road Class
 class Road:
 
     # Road Attributions
@@ -20,12 +17,12 @@ class Road:
         self.percent_heavy_vehichles = .25  # decimal percentage
         self.segment_distance = segment_distance  # km
 
-        self.aload = 0 # astar
-        self.bload = 0 # our algorithm
+        self.aload = 0  # number of vehicles via astar
+        self.bload = 0  # number of vehicles via bna
 
-        self.free_flow_speed()
-        self.critical_density()
-        self.jam_density()
+        self.free_flow_speed()  # calculate free flow speed
+        self.critical_density()  # calculate critical density
+        self.jam_density()  # calculate jam density
         self.individual_speed_decrease()
 
     # Free Flow Speed Calculator
@@ -55,7 +52,7 @@ class Road:
 
         # Adjustment Factor for Median Type (f_M)
         if self.divided_median == True:
-            f_M  = 0
+            f_M = 0
             driveway_density = 2
         else:
             f_M = 1.6
@@ -113,12 +110,11 @@ class Road:
         # Calculation for Individual Speed Decrease (ISD)
         self.ISD = (self.FFS / (self.k_C - self.k_J))
 
-        # Volume-Adjusted Speed Calculator using Greensfield's Model
-
-    def speed(self, vehichles):
+    # Calculate Speed of Traffic
+    def speed(self, vehicles):
 
         # Calculation for segment density
-        density = vehichles / self.segment_distance
+        density = vehicles / self.segment_distance
 
         # Calculation for Volume-Adjusted Speed (u)
         if density >= self.k_J:
@@ -129,31 +125,18 @@ class Road:
             u = self.ISD * (density - self.k_J)
         return u
 
-    # Individual Travel Time Increase Calculator
-    def h_factor(self, current_load, new_load):
-
-        # Calculate travel times before and after a given
-        min_time = self.segment_distance / self.speed(current_load)
-        max_time = self.segment_distance / self.speed(new_load)
-
-        # Calculate difference in travel times in seconds
-        return ((max_time - min_time) / (new_load - current_load)) * 3600
-
-    # Individual Impact on Traffic System Calculator
-    def i_factor(self):
-
-        # Calculate the decrease in speed adjusted for segment distance
-        return abs(self.ISD) * self.segment_distance
-
+    # Calculate Combined Travel Time of all Vehicles on Segment
     def travel_time(self, load):
         return self.segment_distance / self.speed(load) * 3600
 
-    def add_vehichle(self, algorithm, load):
+    # Change Number of Vehicles on Segment
+    def add_vehicles(self, algorithm, load):
         if algorithm == 'astar':
             self.aload += load
         else:
             self.bload += load
 
+    # Differntiate Between Vehicle Loads per Algorithm
     def algorithm_used(self, algorithm):
         if algorithm == 'astar':
             return self.aload
