@@ -4,3 +4,7 @@
 *.iml
 *.pyc
 *.xml
+**/astar/ignorefolder
+astar/Network1.png
+astar/Network2.png
+astar/Network3.png

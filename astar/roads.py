@@ -68,8 +68,7 @@ class Road:
             f_N = (5 - self.lanes) * 1.5
 
         # Calculation for Free Flow Speed (FFS)
-        self.FFS = BFFS - f_LW - f_LC - f_M
-        f_A - f_N
+        self.FFS = BFFS - f_LW - f_LC - f_M - f_A - f_N
 
     # Critical Denisty Calculator
     def critical_density(self):

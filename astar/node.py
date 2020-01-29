@@ -8,7 +8,7 @@ from roads import Road
 # Graph Class
 class Graph:
 
-    # Cretae Nodes and Edges
+    # Create Nodes and Edges
     def __init__(self):
         self.nodes = []
         self.edges = {}
@@ -56,6 +56,7 @@ class Node:
     def reset(self):
         self.g = None
         self.h = 0
+
         self.f = 0
         self.parent = None
         self.closed = False

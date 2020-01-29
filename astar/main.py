@@ -1,6 +1,9 @@
 # Main
 
 # Import Necessary Classes and Functions
+from PIL import Image, ImageDraw
+from matplotlib.figure import Figure
+
 from astar import astar
 from bna import bna
 from imagegen import composite_and_save, generate_image
@@ -8,6 +11,8 @@ from node import Node, Graph
 from roads import Road
 from runner import random_nodes, node_reset, segment_load, total_time, graph_reset
 import math, random
+import matplotlib.pyplot as plt
+import matplotlib.image as imgr
 
 # Create a Graph Object
 graph = Graph()
@@ -32,7 +37,8 @@ graph.add_edge(2, 0, Road(60, 4, math.sqrt(13)))
 graph.add_edge(1, 2, Road(120, 4, math.sqrt(13)))
 graph.add_edge(2, 1, Road(120, 4, math.sqrt(13)))
 
-num = 710
+# Run Both Algorithms Once with 500 vehicles
+num = 510
 for x in range(1):
     num -= 10
 
@@ -43,14 +49,13 @@ for x in range(1):
 
     # Run A* Algorithm for Every Vehicle
     for vehicles in range(num):
-
         # Find Start and End Nodes from list
         start_node = nodes_list[vehicles][0]
         end_node = nodes_list[vehicles][1]
 
         # Find Ideal Shortest Path using A* to Minimize Travel Time
-        path = list(reversed([x.pos for x in astar(graph, Node(graph.nodes[start_node].id,graph.nodes[start_node].pos),
-                                                   Node(graph.nodes[end_node].id,graph.nodes[end_node].pos))]))
+        path = list(reversed([x.pos for x in astar(graph, Node(graph.nodes[start_node].id, graph.nodes[start_node].pos),
+                                                   Node(graph.nodes[end_node].id, graph.nodes[end_node].pos))]))
 
         # Load Vehicle into Traffic System
         segment_load(graph, path, 'astar', 1)
@@ -61,22 +66,15 @@ for x in range(1):
     # Run Better Navigational Algorithm (BNA)
     bna(graph, nodes_list)
 
-    m1 = generate_image(graph, 'astar', False)
-    m2 = generate_image(graph, 'bna', False)
+    # Generate the two images and save it.
+    m1 = generate_image(graph, 'astar')
+    m2 = generate_image(graph, 'bna')
     composite_and_save(m1, m2)
 
-    file = open("astar_times.txt","a")
-    file.write(str(total_time(graph, 'astar')) + '\n')
-    file.close()
+    # Display the image.
+    img:Image = Image.open('graph.png')
+    img.show()
 
-    file = open("bna_times.txt", "a")
-    file.write(str(total_time(graph, 'bna')) + '\n')
-    file.close()
-
-    file = open("vehicles.txt", "a")
-    file.write(str(num) + '\n')
-    file.close()
-
+    # Reset the graph.
     graph_reset(graph)
-    print(num)
 

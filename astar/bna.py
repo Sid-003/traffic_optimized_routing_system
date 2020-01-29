@@ -46,10 +46,10 @@ def critical_load(graph):
     for start_node in range(len(graph.nodes) + 1):
         for end_node in range(len(graph.nodes) + 1):
             try:
-                load += graph.edges[(start_node, end_node)].k_C*graph.edges[(start_node, end_node)].segment_distance
+                load += graph.edges[(start_node, end_node)].k_C * graph.edges[(start_node, end_node)].segment_distance
             except:
                 pass
-    return load*.25
+    return load * .25
 
 
 # For Vehicles Traveling Between Neighboring Nodes
@@ -183,7 +183,6 @@ def load_distribution(graph, connection_list, path_all_index):
 
 # Better Navigational Algorithm (BNA)
 def bna(graph, nodes_list):
-
     # Sort Vehicles by Start and End Node
     connection_list = arrange(graph, nodes_list)
 
